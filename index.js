@@ -57,7 +57,7 @@ app.use((req, res, next) => {
   if (!req.session.opiniones) {
     req.session.opiniones = [
       {
-        id: "1",
+        id: 1,
         idcafe:1,
         nombre: "María Pérez",
         correo: "maria@example.com",
@@ -65,7 +65,7 @@ app.use((req, res, next) => {
         opinion: "Me encanta este café, tiene un sabor increíble.",
       },
       {
-        id: "2",
+        id: 2,
         idcafe:2,
         nombre: "Juan Rodríguez",
         correo: "juan@example.com",
@@ -73,7 +73,7 @@ app.use((req, res, next) => {
         opinion: "Excelente servicio al cliente. ¡Volveré pronto!",
       },
       {
-        id: "3",
+        id: 3,
         idcafe:2,
         nombre: "Ana Gómez",
         correo: "ana@example.com",
@@ -81,7 +81,7 @@ app.use((req, res, next) => {
         opinion: "El ambiente en la cafetería es muy acogedor. Recomendado.",
       },
       {
-        id: "4",
+        id: 4,
         idcafe:3,
         nombre: "Carlos Martínez",
         correo: "carlos@example.com",
@@ -89,7 +89,7 @@ app.use((req, res, next) => {
         opinion: "El café tiene un aroma delicioso. ¡Volveré a probar más variedades!",
       },
       {
-        id: "5",
+        id: 5,
         idcafe:3,
         nombre: "Laura Díaz",
         correo: "laura@example.com",
