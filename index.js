@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+const cors = require("cors");
 
 const app = express();
 const PORT = 3000;
@@ -15,6 +16,7 @@ app.use(
 );
 
 app.use(bodyParser.json());
+app.use(cors());
 
 // Middleware para verificar si hay una lista de marcas en la sesión, si no, la inicializa
 app.use((req, res, next) => {
