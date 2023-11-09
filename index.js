@@ -54,7 +54,7 @@ app.use((req, res, next) => {
       },
     ];
   }
-  if (!Array.isArray(req.session.opiniones)) {
+  if (!req.session.opiniones) {
     req.session.opiniones = [
       {
         id: "1",
@@ -154,7 +154,7 @@ app.get('/opiniones', (req, res) => {
 // Método GET para obtener opiniones relacionadas a un café específico (idcafe = 1)
 app.get('/opiniones/:idcafe', (req, res) => {
   const idcafe = req.params.idcafe;
-  const opinionesRelacionadas = req.session.opiniones.filter(opinion => opinion.idcafe === idcafe);
+  const opinionesRelacionadas = req.session.opiniones.filter(opinion => opinion.idcafe == idcafe);
 
   res.json(opinionesRelacionadas);
 });
