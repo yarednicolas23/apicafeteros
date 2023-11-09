@@ -1,11 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const cors = require("cors");
 
 const app = express();
 const PORT = 3000;
 
-app.use(bodyParser.json());
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
+app.use(cors());
+app.use(express.json());
 
 // Ruta para obtener la lista de marcas de café
 app.get('/marcas', (req, res) => {
@@ -53,7 +62,7 @@ app.delete('/marcas/:nombre', (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT || 2800, () => {
   console.log(`Servidor en ejecución en http://localhost:${PORT}`);
 });
 
