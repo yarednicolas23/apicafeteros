@@ -54,6 +54,51 @@ app.use((req, res, next) => {
       },
     ];
   }
+  if (!Array.isArray(req.session.opiniones)) {
+    req.session.opiniones = [
+      {
+        id: "1",
+        idcafe:1,
+        nombre: "María Pérez",
+        correo: "maria@example.com",
+        telefono: "123456789",
+        opinion: "Me encanta este café, tiene un sabor increíble.",
+      },
+      {
+        id: "2",
+        idcafe:2,
+        nombre: "Juan Rodríguez",
+        correo: "juan@example.com",
+        telefono: "987654321",
+        opinion: "Excelente servicio al cliente. ¡Volveré pronto!",
+      },
+      {
+        id: "3",
+        idcafe:2,
+        nombre: "Ana Gómez",
+        correo: "ana@example.com",
+        telefono: "456789012",
+        opinion: "El ambiente en la cafetería es muy acogedor. Recomendado.",
+      },
+      {
+        id: "4",
+        idcafe:3,
+        nombre: "Carlos Martínez",
+        correo: "carlos@example.com",
+        telefono: "345678901",
+        opinion: "El café tiene un aroma delicioso. ¡Volveré a probar más variedades!",
+      },
+      {
+        id: "5",
+        idcafe:3,
+        nombre: "Laura Díaz",
+        correo: "laura@example.com",
+        telefono: "234567890",
+        opinion: "Me gusta la variedad de opciones de café. ¡Una experiencia única!",
+      },
+    ];
+  }
+  
   next();
 });
 
@@ -97,6 +142,56 @@ app.delete("/marcas/:nombre", (req, res) => {
     res.json({ message: "Marca de café eliminada correctamente" });
   } else {
     res.status(404).json({ message: "Marca de café no encontrada" });
+  }
+});
+
+// Consultar todas las opiniones
+app.get('/opiniones', (req, res) => {
+  const opiniones = req.session.opiniones;
+  res.json(opiniones);
+});
+
+// Método GET para obtener opiniones relacionadas a un café específico (idcafe = 1)
+app.get('/opiniones/:idcafe', (req, res) => {
+  const idcafe = req.params.idcafe;
+  const opinionesRelacionadas = req.session.opiniones.filter(opinion => opinion.idcafe === idcafe);
+
+  res.json(opinionesRelacionadas);
+});
+
+// Crear una nueva opinión
+app.post('/opiniones', (req, res) => {
+  const nuevaOpinion = req.body;
+  req.session.opiniones.push(nuevaOpinion);
+  res.json({ message: 'Opinión agregada correctamente' });
+});
+
+// Editar una opinión por su identificador (id)
+app.put('/opiniones/:id', (req, res) => {
+  const id = req.params.id;
+  const nuevaInfo = req.body;
+  const opiniones = req.session.opiniones;
+  const index = opiniones.findIndex(opinion => opinion.id === id);
+
+  if (index !== -1) {
+    opiniones[index] = { ...opiniones[index], ...nuevaInfo };
+    res.json({ message: 'Opinión editada correctamente' });
+  } else {
+    res.status(404).json({ message: 'Opinión no encontrada' });
+  }
+});
+
+// Eliminar una opinión por su identificador (id)
+app.delete('/opiniones/:id', (req, res) => {
+  const id = req.params.id;
+  const opiniones = req.session.opiniones;
+  const index = opiniones.findIndex(opinion => opinion.id === id);
+
+  if (index !== -1) {
+    opiniones.splice(index, 1);
+    res.json({ message: 'Opinión eliminada correctamente' });
+  } else {
+    res.status(404).json({ message: 'Opinión no encontrada' });
   }
 });
 
